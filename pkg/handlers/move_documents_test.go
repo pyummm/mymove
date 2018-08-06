@@ -14,7 +14,8 @@ import (
 )
 
 func (suite *HandlerSuite) TestCreateMoveDocumentHandler() {
-	move := testdatagen.MakeDefaultMove(suite.db)
+	ppm := testdatagen.MakeDefaultPPM(suite.db)
+	move := ppm.Move
 	sm := move.Orders.ServiceMember
 
 	upload := testdatagen.MakeUpload(suite.db, testdatagen.Assertions{
@@ -29,28 +30,28 @@ func (suite *HandlerSuite) TestCreateMoveDocumentHandler() {
 	request := httptest.NewRequest("POST", "/fake/path", nil)
 	request = suite.authenticateRequest(request, sm)
 
-	newMoveDocPayload := internalmessages.CreateMoveDocumentPayload{
-		UploadIds:        uploadIds,
-		MoveDocumentType: internalmessages.MoveDocumentTypeOTHER,
-		Title:            fmtString("awesome_document.pdf"),
-		Notes:            fmtString("Some notes here"),
-		Status:           internalmessages.MoveDocumentStatusAWAITINGREVIEW,
+	newMoveDocPayload := internalmessages.CreateGenericMoveDocumentPayload{
+		UploadIds:                uploadIds,
+		PersonallyProcuredMoveID: fmtUUID(ppm.ID),
+		MoveDocumentType:         internalmessages.MoveDocumentTypeOTHER,
+		Title:                    fmtString("awesome_document.pdf"),
+		Notes:                    fmtString("Some notes here"),
 	}
 
-	newMoveDocParams := movedocop.CreateMoveDocumentParams{
-		HTTPRequest:               request,
-		CreateMoveDocumentPayload: &newMoveDocPayload,
+	newMoveDocParams := movedocop.CreateGenericMoveDocumentParams{
+		HTTPRequest:                      request,
+		CreateGenericMoveDocumentPayload: &newMoveDocPayload,
 		MoveID: strfmt.UUID(move.ID.String()),
 	}
 
 	context := NewHandlerContext(suite.db, suite.logger)
 	fakeS3 := storageTest.NewFakeS3Storage(true)
 	context.SetFileStorer(fakeS3)
-	handler := CreateMoveDocumentHandler(context)
+	handler := CreateGenericMoveDocumentHandler(context)
 	response := handler.Handle(newMoveDocParams)
 	// assert we got back the 201 response
 	suite.isNotErrResponse(response)
-	createdResponse := response.(*movedocop.CreateMoveDocumentOK)
+	createdResponse := response.(*movedocop.CreateGenericMoveDocumentOK)
 	createdPayload := createdResponse.Payload
 	suite.NotNil(createdPayload.ID)
 
@@ -75,13 +76,15 @@ func (suite *HandlerSuite) TestCreateMoveDocumentHandler() {
 }
 
 func (suite *HandlerSuite) TestIndexMoveDocumentsHandler() {
-	move1 := testdatagen.MakeDefaultMove(suite.db)
-	sm := move1.Orders.ServiceMember
+	ppm := testdatagen.MakeDefaultPPM(suite.db)
+	move := ppm.Move
+	sm := move.Orders.ServiceMember
 
 	moveDocument := testdatagen.MakeMoveDocument(suite.db, testdatagen.Assertions{
 		MoveDocument: models.MoveDocument{
-			MoveID: move1.ID,
-			Move:   move1,
+			MoveID: move.ID,
+			Move:   move,
+			PersonallyProcuredMoveID: &ppm.ID,
 		},
 	})
 
@@ -90,7 +93,7 @@ func (suite *HandlerSuite) TestIndexMoveDocumentsHandler() {
 
 	indexMoveDocParams := movedocop.IndexMoveDocumentsParams{
 		HTTPRequest: request,
-		MoveID:      strfmt.UUID(move1.ID.String()),
+		MoveID:      strfmt.UUID(move.ID.String()),
 	}
 
 	context := NewHandlerContext(suite.db, suite.logger)
@@ -106,6 +109,7 @@ func (suite *HandlerSuite) TestIndexMoveDocumentsHandler() {
 
 	for _, moveDoc := range indexPayload {
 		suite.Require().Equal(*moveDoc.ID, strfmt.UUID(moveDocument.ID.String()), "expected move ids to match")
+		suite.Require().Equal(*moveDoc.PersonallyProcuredMoveID, strfmt.UUID(ppm.ID.String()), "expected ppm ids to match")
 	}
 
 	// Next try the wrong user
@@ -141,10 +145,13 @@ func (suite *HandlerSuite) TestUpdateMoveDocumentHandler() {
 	request = suite.authenticateRequest(request, sm)
 
 	// And: the title and status are updated
-	updateMoveDocPayload := internalmessages.UpdateMoveDocumentPayload{
-		Title:  fmtString("super_awesome.pdf"),
-		Notes:  fmtString("This document is super awesome."),
-		Status: internalmessages.MoveDocumentStatusOK,
+	updateMoveDocPayload := internalmessages.MoveDocumentPayload{
+		ID:               fmtUUID(moveDocument.ID),
+		MoveID:           fmtUUID(move.ID),
+		Title:            fmtString("super_awesome.pdf"),
+		Notes:            fmtString("This document is super awesome."),
+		Status:           internalmessages.MoveDocumentStatusOK,
+		MoveDocumentType: internalmessages.MoveDocumentTypeOTHER,
 	}
 
 	updateMoveDocParams := movedocop.UpdateMoveDocumentParams{
@@ -157,6 +164,7 @@ func (suite *HandlerSuite) TestUpdateMoveDocumentHandler() {
 	response := handler.Handle(updateMoveDocParams)
 
 	// Then: we expect to get back a 200 response
+	suite.isNotErrResponse(response)
 	updateResponse := response.(*movedocop.UpdateMoveDocumentOK)
 	updatePayload := updateResponse.Payload
 	suite.NotNil(updatePayload)
@@ -166,5 +174,4 @@ func (suite *HandlerSuite) TestUpdateMoveDocumentHandler() {
 	// And: the new data to be there
 	suite.Require().Equal(*updatePayload.Title, "super_awesome.pdf")
 	suite.Require().Equal(*updatePayload.Notes, "This document is super awesome.")
-
 }
