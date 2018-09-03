@@ -42,7 +42,7 @@
   version = "v9"
 
 [[projects]]
-  digest = "1:174e893894d5d9a24b89e863df45838c2a9f39e9d4e0467b6e211744c40644ac"
+  digest = "1:9563d099d677a0c1f321508b20c52544d8fbb241904d205783227301ccfc207c"
   name = "github.com/aws/aws-sdk-go"
   packages = [
     "aws",
@@ -84,8 +84,8 @@
     "service/sts",
   ]
   pruneopts = ""
-  revision = "4324bc9d8865bdb3e6aa86ec7772ca1272d2750e"
-  version = "v1.15.21"
+  revision = "04abd557eeaab3cfdded45467eea00fc03db9cb9"
+  version = "v1.15.26"
 
 [[projects]]
   branch = "master"
@@ -231,11 +231,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:af5146750cfab1952c8419a6be879ecd140892016de876d5ae72d2ceec375ba9"
+  digest = "1:6d57df048252cc58e69dbff130b563c94d8aaee8978db5c5b81aa27630136f35"
   name = "github.com/go-openapi/errors"
   packages = ["."]
   pruneopts = ""
-  revision = "ffd6e7db07730917bfeaa43833b5e25833577955"
+  revision = "87bb653288778f8b0d922c5c3fb8b3f00a47ff28"
 
 [[projects]]
   branch = "master"
@@ -468,12 +468,12 @@
   version = "v1.2.0"
 
 [[projects]]
-  digest = "1:c1d7e883c50a26ea34019320d8ae40fad86c9e5d56e63a1ba2cb618cef43e986"
+  digest = "1:5247b135b5492aa232a731acdcb52b08f32b874cb398f21ab460396eadbe866b"
   name = "github.com/google/uuid"
   packages = ["."]
   pruneopts = ""
-  revision = "064e2069ce9c359c118179501254f67d7d37ba24"
-  version = "0.2"
+  revision = "d460ce9f8df2e77fb1ba55ca87fafed96c607494"
+  version = "v1.0.0"
 
 [[projects]]
   digest = "1:66d63ec7b6035984dced87ad37066e5f4ad277c60234a9d9925537248e983200"
@@ -503,7 +503,7 @@
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:ba26b234a639dcc4f44c36433688fe3068ecaf65ca2aa5865914c6616ecd277e"
+  digest = "1:cc8119572437724752855eb91880262281d6ddae441a8cd77d43caf58656af19"
   name = "github.com/honeycombio/beeline-go"
   packages = [
     ".",
@@ -512,8 +512,8 @@
     "wrappers/hnynethttp",
   ]
   pruneopts = ""
-  revision = "6acc807d0ea48acf418285c0262d71272591326e"
-  version = "v0.1.1"
+  revision = "ba5cdfd016315547ff6b3bddde80460413fb8b24"
+  version = "v0.1.2"
 
 [[projects]]
   digest = "1:cd507d3e666790a625f34d59d5b0c314ce18b914e1ce3a73d0305b96914d66ae"
@@ -678,12 +678,12 @@
   version = "v0.0.9"
 
 [[projects]]
-  digest = "1:78229b46ddb7434f881390029bd1af7661294af31f6802e0e1bedaad4ab0af3c"
+  digest = "1:3140e04675a6a91d2a20ea9d10bdadf6072085502e6def6768361260aee4b967"
   name = "github.com/mattn/go-isatty"
   packages = ["."]
   pruneopts = ""
-  revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
-  version = "v0.0.3"
+  revision = "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c"
+  version = "v0.0.4"
 
 [[projects]]
   digest = "1:477cce5379198d3b8230b5c0961c61fcd1b337371cda81318e89a109245d83cb"
@@ -777,7 +777,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:2daeef72640c31b542d10833095e6e4944372942e0855c3a9eed9d4f3b0a6c43"
+  digest = "1:57a0c723cca6a02222374b21032a060465ce256419c5a8ebdef070f4a4f442db"
   name = "github.com/securego/gosec"
   packages = [
     ".",
@@ -786,7 +786,7 @@
     "rules",
   ]
   pruneopts = ""
-  revision = "e4ba96adc310ea1fe64f43af8e26dd076361b57c"
+  revision = "63b25c147f2c4adad010f0d77e2458d77633de11"
 
 [[projects]]
   digest = "1:15bd5ec281b02420085efa18da9e3ab40d90cf8dbd008629fc1a0ae4415e21b0"
@@ -938,11 +938,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:a3018c5a423d6cfacf5c6e736ad07637494728fb446390e3f34cacae9e80a529"
+  digest = "1:13d8f6c510b914388e724aa63f9576464ea0dfa237021b3a539eb659d793d222"
   name = "github.com/spf13/viper"
   packages = ["."]
   pruneopts = ""
-  revision = "907c19d40d9a6c9bb55f040ff4ae45271a4754b9"
+  revision = "0ac2068de99fd349edc4954d0e9b4a600d75da44"
 
 [[projects]]
   digest = "1:c587772fb8ad29ad4db67575dad25ba17a51f072ff18a22b4f0257a4d9c24f75"
@@ -1024,14 +1024,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:793a79198b755828dec284c6f1325e24e09186f1b7ba818b65c7c35104ed86eb"
+  digest = "1:3ff237df1dca22c6296d2446c76ddcff8d359180ca53b8dcd301a44aa5c2f479"
   name = "golang.org/x/crypto"
   packages = [
     "bcrypt",
     "blowfish",
   ]
   pruneopts = ""
-  revision = "614d502a4dac94afa3a6ce146bd1736da82514c6"
+  revision = "182538f80094b6a8efaade63a8fd8e0d9d5843dd"
 
 [[projects]]
   branch = "master"
@@ -1077,11 +1077,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:7a5f7a1206de6b90f67cb465e489eac3298e95afa7262813b542df4fab38952f"
+  digest = "1:85fab7aaca4239017b02462635379f0b2203ab47961216c8e64b5fb48601ab4f"
   name = "golang.org/x/sys"
   packages = ["unix"]
   pruneopts = ""
-  revision = "4910a1d54f876d7b22162a85f4d066d3ee649450"
+  revision = "fa5fdf94c78965f1aa8423f0cc50b8b8d728b05a"
 
 [[projects]]
   digest = "1:5acd3512b047305d49e8763eef7ba423901e85d5dd2fd1e71778a0ea8de10bd4"
@@ -1109,7 +1109,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:3b1b5e1c7268796692c39157a243d247073db39928c2cfdde66e686c522a335c"
+  digest = "1:1f1708d4c68aa8bbf117ce8d1f33cd6028fefb70e5d68aafa6b4a1a503ea5774"
   name = "golang.org/x/tools"
   packages = [
     "go/ast/astutil",
@@ -1123,7 +1123,7 @@
     "internal/fastwalk",
   ]
   pruneopts = ""
-  revision = "f6ba5742950514ddd66494151ed5498ed77969ca"
+  revision = "7ca132754999accbaa5c1735eda29e7ce0f3bf03"
 
 [[projects]]
   digest = "1:c1771ca6060335f9768dff6558108bc5ef6c58506821ad43377ee23ff059e472"
