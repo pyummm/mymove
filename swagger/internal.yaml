@@ -3765,3 +3765,29 @@ paths:
           description: personally procured move not found
         409:
           description: Requested weight estimate is above allotted entitlement
+  /dps_auth/cookie:
+    post:
+      summary: Sets a cookie for DPS authentication
+      description: Sets a cookie for DPS authentication
+      operationId: setDPSAuthCookie
+      tags:
+        - dps_auth
+      parameters:
+        - in: query
+          name: cookie_name
+          type: string
+          description: The name of the cookie to set, DPS by default
+          required: false
+        - in: query
+          name: redirect_url
+          type: string
+          format: uri
+          description: The URL to redirect to
+          required: false
+      responses:
+        200:
+          description: set cookie
+        400:
+          description: invalid request
+        500:
+          description: internal server error
