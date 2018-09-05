@@ -33,6 +33,7 @@ import { loadLoggedInUser } from 'shared/User/ducks';
 import { loadSchema } from 'shared/Swagger/ducks';
 import FailWhale from 'shared/FailWhale';
 import { no_op } from 'shared/utils';
+import DPSAuth from 'scenes/DPSAuth';
 
 const NoMatch = ({ location }) => (
   <div className="usa-grid">
@@ -125,6 +126,7 @@ export class AppWrapper extends Component {
                       path="/moves/:moveId/request-payment"
                       component={PaymentRequest}
                     />
+                    <PrivateRoute path="/dps_auth" component={DPSAuth} />
                     <Route component={NoMatch} />
                   </Switch>
                 )}
