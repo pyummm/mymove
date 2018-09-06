@@ -30,16 +30,8 @@ export class DPSAuth extends Component {
       <div className="usa-grid">
         <h1 className="sm-heading">Redirect to DPS</h1>
         <form onSubmit={this.props.handleSubmit(this.sendRequest)}>
-          <SwaggerField
-            fieldName="cookie_name"
-            swagger={this.props.schema}
-            required
-          />
-          <SwaggerField
-            fieldName="redirect_url"
-            swagger={this.props.schema}
-            required
-          />
+          <SwaggerField fieldName="cookie_name" swagger={this.props.schema} />
+          <SwaggerField fieldName="redirect_url" swagger={this.props.schema} />
           <button type="submit">Submit</button>
         </form>
       </div>
