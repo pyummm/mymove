@@ -45,7 +45,7 @@ type DPSAuthCookieHandler struct {
 	handlers.HandlerContext
 }
 
-// Handle sets the cookie and begins the authentication process for DPS
+// Handle sets the cookie necessary for beginning the authentication process for DPS
 func (h DPSAuthCookieHandler) Handle(params dps_auth.SetDPSAuthCookieParams) middleware.Responder {
 	cookieName := "DPS"
 	if params.CookieName != nil {

@@ -3778,12 +3778,6 @@ paths:
           type: string
           description: The name of the cookie to set, DPS by default
           required: false
-        - in: query
-          name: redirect_url
-          type: string
-          format: uri
-          description: The URL to redirect to
-          required: false
       responses:
         200:
           description: set cookie
