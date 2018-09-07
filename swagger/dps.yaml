@@ -17,19 +17,12 @@ definitions:
     x-nullable: true
     title: Branch of service
     enum: &AFFILIATION
-      - ARMY
-      - NAVY
-      - MARINES
-      - AIR_FORCE
-      - COAST_GUARD
-      - OTHER
-    x-display-value:
-      ARMY: Army
-      NAVY: Navy
-      MARINES: Marines
-      AIR_FORCE: Air Force
-      COAST_GUARD: Coast Guard
-      OTHER: Other
+      - Army
+      - Navy
+      - Marines
+      - Air Force
+      - Coast Guard
+      - Otherr
   AuthenticationUserPayload:
     type: object
     properties:
@@ -81,6 +74,7 @@ paths:
           in: query
           type: string
           description: The value of the authentication cookie set by MyMove
+          required: true
       responses:
         200:
           description: Successful

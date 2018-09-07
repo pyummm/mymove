@@ -1,14 +1,10 @@
 package internalapi
 
 import (
-	"crypto/aes"
-	"crypto/cipher"
-	"crypto/rand"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
-	"os"
 	"strconv"
 	"time"
 
@@ -66,6 +62,7 @@ func (h DPSAuthCookieHandler) encryptedCookieValue(params dps_auth.SetDPSAuthCoo
 	session := auth.SessionFromRequestContext(params.HTTPRequest)
 
 	expirationTime := time.Now().Add(time.Hour * time.Duration(cookieExpiresInHours)).Unix()
+	fmt.Println(session.UserID.String())
 	value := map[string]string{
 		"user_id":    session.UserID.String(),
 		"expires_at": strconv.FormatInt(expirationTime, 10),
@@ -76,25 +73,33 @@ func (h DPSAuthCookieHandler) encryptedCookieValue(params dps_auth.SetDPSAuthCoo
 		return "", err
 	}
 
-	secretKey := os.Getenv("DPS_AUTH_COOKIE_SECRET_KEY")
-	return encrypt(valueJSON, secretKey)
+	return encrypt(valueJSON)
 }
 
-func encrypt(data []byte, key string) (string, error) {
-	c, err := aes.NewCipher([]byte(key))
-	if err != nil {
-		return "", err
-	}
+func encrypt(data []byte) (string, error) {
+	// TODO: encrypt
+	return base64.StdEncoding.EncodeToString(data), nil
 
-	gcm, err := cipher.NewGCM(c)
-	if err != nil {
-		return "", err
-	}
+	/*
+		key := os.Getenv("DPS_AUTH_COOKIE_SECRET_KEY")
+		c, err := aes.NewCipher([]byte(key))
+		if err != nil {
+			return "", err
+		}
 
-	nonce := make([]byte, gcm.NonceSize())
-	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
-		return "", err
-	}
+		gcm, err := cipher.NewGCM(c)
+		if err != nil {
+			return "", err
+		}
 
-	return string(gcm.Seal(nonce, nonce, data, nil)), nil
+		nonce := make([]byte, gcm.NonceSize())
+		fmt.Print("NNN: ")
+		fmt.Println(nonce)
+		if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
+			return "", err
+		}
+
+		encoded := gcm.Seal(nonce, nonce, data, nil)
+		return base64.StdEncoding.EncodeToString(encoded), nil
+	*/
 }
