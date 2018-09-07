@@ -172,6 +172,21 @@ jobs:
       - APP_HEALTH_CHECK_URL: "https://my.move.mil/health"
     steps: *deploy_app_steps
 
+  deploy_experimental_migrations:
+    docker:
+      - image: trussworks/circleci-docker-primary:4bb9cacfdfa1fbc995e89204f030264843f5bc91
+    environment:
+      - APP_ENVIRONMENT: "experimental"
+    steps: *deploy_migrations_steps
+
+  deploy_experimental_app:
+    docker:
+      - image: trussworks/circleci-docker-primary:4bb9cacfdfa1fbc995e89204f030264843f5bc91
+    environment:
+      - APP_ENVIRONMENT: "experimental"
+      - APP_HEALTH_CHECK_URL: "https://my.experimental.move.mil/health"
+    steps: *deploy_app_steps
+
   integration_tests:
     docker:
       - image: trussworks/circleci-docker-primary:b57cdd9fd4b61d85f49134bf76c16961670f0257
@@ -226,6 +241,22 @@ workflows:
       - pre_test
       - build_app
       - build_migrations
+
+      - deploy_experimental_migrations:
+          requires:
+            - pre_test
+            - build_app
+            - build_migrations
+          filters:
+            branches:
+              only: dps_auth
+
+      - deploy_experimental_app:
+          requires:
+            - deploy_experimental_migrations
+          filters:
+            branches:
+              only: dps_auth
 
       - deploy_staging_migrations:
           requires:
