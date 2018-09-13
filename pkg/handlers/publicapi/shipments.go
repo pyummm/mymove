@@ -200,6 +200,37 @@ func (h RejectShipmentHandler) Handle(params shipmentop.RejectShipmentParams) mi
 	return shipmentop.NewRejectShipmentOK().WithPayload(sp)
 }
 
+// BeginShipmentHandler allows a TSP to accept a particular shipment
+type BeginShipmentHandler struct {
+	handlers.HandlerContext
+}
+
+// Handle accepts the shipment - checks that currently logged in user is authorized to act for the TSP assigned the shipment
+func (h BeginShipmentHandler) Handle(params shipmentop.AcceptShipmentParams) middleware.Responder {
+	session := auth.SessionFromRequestContext(params.HTTPRequest)
+
+	shipmentID, _ := uuid.FromString(params.ShipmentID.String())
+
+	shipment, err := models.FetchShipment(h.DB(), session, shipmentID)
+	if err != nil {
+		return handlers.ResponseForError(h.Logger(), err)
+	}
+
+	err = shipment.Begin()
+	if err != nil {
+		return handlers.ResponseForError(h.Logger(), err)
+	}
+
+	verrs, errr = h.DB().Save(shipment)
+	if err != nil || verrs.HasAny() {
+		return handlers.ResponseForVErrors(h.Logger(), verrs, err)
+	}
+
+	sp := payloadForShipmentModel(*shipment)
+	return shipmentop.NewBeginShipmentOK().WithPayload(sp)
+
+}
+
 func patchShipmentWithPayload(shipment *models.Shipment, payload *apimessages.Shipment) {
 	// Premove Survey values entered by TSP agent
 	requiredValue := payload.PmSurveyPlannedPackDate

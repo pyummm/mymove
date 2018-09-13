@@ -762,8 +762,6 @@ definitions:
       - AWARDED
       - ACCEPTED
       - APPROVED
-      - REJECTED
-      - IN_PROGRESS
       - IN_TRANSIT
       - DELIVERED
       - COMPLETED
@@ -1258,6 +1256,68 @@ paths:
       responses:
         200:
           description: returns updated (accepted) shipment object
+          schema:
+            $ref: '#/definitions/Shipment'
+        400:
+          description: invalid request
+        401:
+          description: must be authenticated to use this endpoint
+        403:
+          description: not authorized to accept this shipment
+        409:
+          description: the shipment is not in a state to be accepted
+          schema:
+            $ref: '#/definitions/Shipment'
+        500:
+          description: server error
+  /shipments/{shipmentId}/begin:
+    post:
+      summary: Begins delivering a shipment.
+      description: Moves the state of the shipment to IN_TRANSIT
+      operationId: beginShipment
+      tags:
+        - shipments
+      parameters:
+        - name: shipmentId
+          in: path
+          type: string
+          format: uuid
+          required: true
+          description: UUID of the shipment
+      responses:
+        200:
+          description: returns updated (in transit) shipment object
+          schema:
+            $ref: '#/definitions/Shipment'
+        400:
+          description: invalid request
+        401:
+          description: must be authenticated to use this endpoint
+        403:
+          description: not authorized to accept this shipment
+        409:
+          description: the shipment is not in a state to be accepted
+          schema:
+            $ref: '#/definitions/Shipment'
+        500:
+          description: server error
+  /shipments/{shipmentId}/deliver:
+    post:
+      summary: Marks the shipment as delivered
+      description: Marks the shipment as delivered
+      operationId: deliverShipment
+      tags:
+        - shipments
+      parameters:
+        - name: shipmentId
+          in: path
+          type: string
+          format: uuid
+          required: true
+          description: UUID of the shipment
+      responses:
+        200:
+          description: returns updated (delivered) shipment object
           schema:
             $ref: '#/definitions/Shipment'
         400:

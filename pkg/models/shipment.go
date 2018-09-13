@@ -31,6 +31,12 @@ const (
 	ShipmentStatusACCEPTED ShipmentStatus = "ACCEPTED"
 	// ShipmentStatusAPPROVED captures enum value "APPROVED"
 	ShipmentStatusAPPROVED ShipmentStatus = "APPROVED"
+	// ShipmentStatusINTRANSIT captures enum value "IN_TRANSIT"
+	ShipmentStatusINTRANSIT ShipmentStatus = "IN_TRANSIT"
+	// ShipmentStatusDELIVERED captures enum value "DELIVERED"
+	ShipmentStatusDELIVERED ShipmentStatus = "DELIVERED"
+	// ShipmentStatusCOMPLETED captures enum value "COMPLETED"
+	ShipmentStatusCOMPLETED ShipmentStatus = "COMPLETED"
 )
 
 // Shipment represents a single shipment within a Service Member's move.
@@ -136,6 +142,33 @@ func (s *Shipment) Approve() error {
 		return errors.Wrap(ErrInvalidTransition, "Approve")
 	}
 	s.Status = ShipmentStatusAPPROVED
+	return nil
+}
+
+// Begin marks the Shipment request as IN_TRANSIT. Must be in an APPROVED state.
+func (s *Shipment) Begin() error {
+	if s.Status != ShipmentStatusAPPROVED {
+		return errors.Wrap(ErrInvalidTransition, "Begin")
+	}
+	s.Status = ShipmentStatusINTRANSIT
+	return nil
+}
+
+// Deliver marks the Shipment request as Deliverd. Must be in an Accepted state.
+func (s *Shipment) Deliver() error {
+	if s.Status != ShipmentStatusINTRANSIT {
+		return errors.Wrap(ErrInvalidTransition, "Deliver")
+	}
+	s.Status = ShipmentStatusDELIVERED
+	return nil
+}
+
+// Complete marks the Shipment request as Completed. Must be in an Accepted state.
+func (s *Shipment) Complete() error {
+	if s.Status != ShipmentStatusDELIVERED {
+		return errors.Wrap(ErrInvalidTransition, "Complete")
+	}
+	s.Status = ShipmentStatusCOMPLETED
 	return nil
 }
 

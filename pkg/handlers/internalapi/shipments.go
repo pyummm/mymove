@@ -268,16 +268,16 @@ func (h GetShipmentHandler) Handle(params shipmentop.GetShipmentParams) middlewa
 	return shipmentop.NewGetShipmentOK().WithPayload(shipmentPayload)
 }
 
-// ApproveHHGHandler approves an HHG
-type ApproveHHGHandler struct {
+// ApproveShipmentHandler approves an HHG
+type ApproveShipmentHandler struct {
 	handlers.HandlerContext
 }
 
 // Handle is the handler
-func (h ApproveHHGHandler) Handle(params shipmentop.ApproveHHGParams) middleware.Responder {
+func (h ApproveShipmentHandler) Handle(params shipmentop.ApproveShipmentParams) middleware.Responder {
 	session := auth.SessionFromRequestContext(params.HTTPRequest)
 	if !session.IsOfficeUser() {
-		return shipmentop.NewApproveHHGForbidden()
+		return shipmentop.NewApproveShipmentForbidden()
 	}
 
 	// #nosec UUID is pattern matched by swagger and will be ok
@@ -298,5 +298,5 @@ func (h ApproveHHGHandler) Handle(params shipmentop.ApproveHHGParams) middleware
 	}
 
 	shipmentPayload := payloadForShipmentModel(*shipment)
-	return shipmentop.NewApproveHHGOK().WithPayload(shipmentPayload)
+	return shipmentop.NewApproveShipmentOK().WithPayload(shipmentPayload)
 }

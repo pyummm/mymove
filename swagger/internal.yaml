@@ -2888,7 +2888,7 @@ paths:
     post:
       summary: Approves an accepted shipment
       description: Approves a shipment accepted by a TSP. The status of the Shipment will be updated to APPROVED.
-      operationId: approveHHG
+      operationId: approveShipment
       tags:
         - shipments
       parameters:
@@ -2901,6 +2901,37 @@ paths:
       responses:
         200:
           description: returns updated (approved) shipment object
+          schema:
+            $ref: '#/definitions/Shipment'
+        400:
+          description: invalid request
+        401:
+          description: must be authenticated to use this endpoint
+        403:
+          description: not authorized to approve this shipment
+        409:
+          description: the shipment is not in a state to be approved
+          schema:
+            $ref: '#/definitions/Shipment'
+        500:
+          description: server error
+  /shipments/{shipmentId}/complete:
+    post:
+      summary: Completes a delivered shipment
+      description: Completes a delivered shipment
+      operationId: completeShipment
+      tags:
+        - shipments
+      parameters:
+        - name: shipmentId
+          in: path
+          type: string
+          format: uuid
+          required: true
+          description: UUID of the shipment
+      responses:
+        200:
+          description: returns updated (completed) shipment object
           schema:
             $ref: '#/definitions/Shipment'
         400:
