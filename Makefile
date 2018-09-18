@@ -68,7 +68,7 @@ tsp_client_run: client_deps
 
 server_deps_update: server_generate
 	dep ensure -v -update
-server_deps: go_version .server_deps.stamp
+server_deps: go_version .server_deps.stamp prereqs
 .server_deps.stamp: Gopkg.lock
 	bin/check_gopath.sh
 	dep ensure -vendor-only
