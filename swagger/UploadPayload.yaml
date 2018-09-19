@@ -1,0 +1,34 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    example: c56a4180-65aa-42ec-a945-5fd21dec0538
+  url:
+    type: string
+    format: uri
+    example: https://uploads.domain.test/dir/c56a4180-65aa-42ec-a945-5fd21dec0538
+  filename:
+    type: string
+    format: string
+    example: filename.pdf
+  content_type:
+    type: string
+    format: mime-type
+    example: application/pdf
+  bytes:
+    type: integer
+  created_at:
+    type: string
+    format: date-time
+  updated_at:
+    type: string
+    format: date-time
+required:
+  - id
+  - url
+  - filename
+  - content_type
+  - bytes
+  - created_at
+  - updated_at
