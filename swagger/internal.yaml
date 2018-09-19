@@ -551,7 +551,7 @@ definitions:
   IndexMoveDocumentPayload:
     type: array
     items:
-      $ref: '#/definitions/MoveDocumentPayload'
+      $ref: 'shared_defs.yaml#/definitions/MoveDocumentPayload'
   # MoveDocumentPayload:
   #    type: object
   #    x-go-type:
@@ -559,61 +559,61 @@ definitions:
   #        package: "github.com/transcom/mymove/swagger"
   #        alias: "shared_defs"
   #      type: "MoveDocumentPayload"
-  MoveDocumentPayload:
-    type: object
-    properties:
-      id:
-        type: string
-        format: uuid
-        example: c56a4180-65aa-42ec-a945-5fd21dec0538
-      move_id:
-        type: string
-        format: uuid
-        example: c56a4180-65aa-42ec-a945-5fd21dec0538
-      personally_procured_move_id:
-        type: string
-        format: uuid
-        example: c56a4180-65aa-42ec-a945-5fd21dec0538
-        x-nullable: true
-      document:
-        $ref: 'shared_defs.yaml#/definitions/DocumentPayload'
-      title:
-        type: string
-        example: very_useful_document.pdf
-        title: Document Title
-      move_document_type:
-        $ref: '#/definitions/MoveDocumentType'
-      status:
-        $ref: '#/definitions/MoveDocumentStatus'
-      notes:
-        type: string
-        example: This document is good to go!
-        x-nullable: true
-        title: Notes
-      moving_expense_type:
-        $ref: '#/definitions/MovingExpenseType'
-      requested_amount_cents:
-        type: integer
-        format: cents
-        minimum: 1
-        title: Requested Amount
-        description: unit is cents
-      payment_method:
-        type: string
-        title: Payment Method
-        enum:
-          - OTHER
-          - GTCC
-        x-display-value:
-          OTHER: Other account
-          GTCC: GTCC
-    required:
-      - id
-      - move_id
-      - document
-      - title
-      - move_document_type
-      - status
+  # MoveDocumentPayload:
+  #   type: object
+  #   properties:
+  #     id:
+  #       type: string
+  #       format: uuid
+  #       example: c56a4180-65aa-42ec-a945-5fd21dec0538
+  #     move_id:
+  #       type: string
+  #       format: uuid
+  #       example: c56a4180-65aa-42ec-a945-5fd21dec0538
+  #     personally_procured_move_id:
+  #       type: string
+  #       format: uuid
+  #       example: c56a4180-65aa-42ec-a945-5fd21dec0538
+  #       x-nullable: true
+  #     document:
+  #       $ref: 'shared_defs.yaml#/definitions/DocumentPayload'
+  #     title:
+  #       type: string
+  #       example: very_useful_document.pdf
+  #       title: Document Title
+  #     move_document_type:
+  #       $ref: '#/definitions/MoveDocumentType'
+  #     status:
+  #       $ref: '#/definitions/MoveDocumentStatus'
+  #     notes:
+  #       type: string
+  #       example: This document is good to go!
+  #       x-nullable: true
+  #       title: Notes
+  #     moving_expense_type:
+  #       $ref: '#/definitions/MovingExpenseType'
+  #     requested_amount_cents:
+  #       type: integer
+  #       format: cents
+  #       minimum: 1
+  #       title: Requested Amount
+  #       description: unit is cents
+  #     payment_method:
+  #       type: string
+  #       title: Payment Method
+  #       enum:
+  #         - OTHER
+  #         - GTCC
+  #       x-display-value:
+  #         OTHER: Other account
+  #         GTCC: GTCC
+  #   required:
+  #     - id
+  #     - move_id
+  #     - document
+  #     - title
+  #     - move_document_type
+  #     - status
   CreateGenericMoveDocumentPayload:
     type: object
     properties:
@@ -1194,7 +1194,7 @@ definitions:
   #     uploads:
   #       type: array
   #       items:
-  #         $ref: './shared_defs.yaml#/definitions/UploadPayload'
+  #         $ref: 'shared_defs.yaml#/definitions/UploadPayload'
   #   required:
   #     - id
   #     - service_member_id
@@ -3102,7 +3102,7 @@ paths:
         200:
           description: returns new move document object
           schema:
-            $ref: '#/definitions/MoveDocumentPayload'
+            $ref: 'shared_defs.yaml#/definitions/MoveDocumentPayload'
         400:
           description: invalid request
         401:
@@ -3129,12 +3129,12 @@ paths:
           name: updateMoveDocument
           required: true
           schema:
-            $ref: '#/definitions/MoveDocumentPayload'
+            $ref: 'shared_defs.yaml#/definitions/MoveDocumentPayload'
       responses:
         200:
           description: updated instance of move document
           schema:
-            $ref: '#/definitions/MoveDocumentPayload'
+            $ref: 'shared_defs.yaml#/definitions/MoveDocumentPayload'
         400:
           description: invalid request
         401:
@@ -3168,7 +3168,7 @@ paths:
         200:
           description: returns new moving expense document object
           schema:
-            $ref: '#/definitions/MoveDocumentPayload'
+            $ref: 'shared_defs.yaml#/definitions/MoveDocumentPayload'
         400:
           description: invalid request
         401:
@@ -3302,7 +3302,7 @@ paths:
         200:
           description: returns a PPM attachments upload
           schema:
-            $ref: './shared_defs.yaml#/definitions/UploadPayload'
+            $ref: 'shared_defs.yaml#/definitions/UploadPayload'
         400:
           description: invalid request
         401:
@@ -3487,7 +3487,7 @@ paths:
         201:
           description: created upload
           schema:
-            $ref: './shared_defs.yaml#/definitions/UploadPayload'
+            $ref: 'shared_defs.yaml#/definitions/UploadPayload'
         400:
           description: invalid request
           schema:
