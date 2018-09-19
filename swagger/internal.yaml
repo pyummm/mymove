@@ -455,7 +455,7 @@ definitions:
     type: object
     properties:
       category:
-        $ref: '#/definitions/MovingExpenseType'
+        $ref: 'shared_defs.yaml#/definitions/MovingExpenseType'
       payment_methods:
         $ref: '#/definitions/PaymentMethodsTotals'
       total:
@@ -582,7 +582,7 @@ definitions:
   #       example: very_useful_document.pdf
   #       title: Document Title
   #     move_document_type:
-  #       $ref: '#/definitions/MoveDocumentType'
+  #       $ref: 'shared_defs.yaml#/definitions/MoveDocumentType'
   #     status:
   #       $ref: '#/definitions/MoveDocumentStatus'
   #     notes:
@@ -591,7 +591,7 @@ definitions:
   #       x-nullable: true
   #       title: Notes
   #     moving_expense_type:
-  #       $ref: '#/definitions/MovingExpenseType'
+  #       $ref: 'shared_defs.yaml#/definitions/MovingExpenseType'
   #     requested_amount_cents:
   #       type: integer
   #       format: cents
@@ -632,7 +632,7 @@ definitions:
         type: string
         example: very_useful_document.pdf
       move_document_type:
-        $ref: '#/definitions/MoveDocumentType'
+        $ref: 'shared_defs.yaml#/definitions/MoveDocumentType'
       notes:
         type: string
         example: This document is good to go!
@@ -642,22 +642,22 @@ definitions:
       - upload_ids
       - title
       - move_document_type
-  MoveDocumentType:
-    type: string
-    title: Document Type
-    example: EXPENSE
-    enum: &MOVEDOCUMENTTYPE
-      - OTHER
-      - WEIGHT_TICKET
-      - STORAGE_EXPENSE
-      - SHIPMENT_SUMMARY
-      - EXPENSE
-    x-display-value:
-      OTHER: Other document type
-      WEIGHT_TICKET: Weight ticket
-      STORAGE_EXPENSE: Storage expense receipt
-      SHIPMENT_SUMMARY: Shipment summary
-      EXPENSE: Expense
+  # MoveDocumentType:
+  #   type: string
+  #   title: Document Type
+  #   example: EXPENSE
+  #   enum: &MOVEDOCUMENTTYPE
+  #     - OTHER
+  #     - WEIGHT_TICKET
+  #     - STORAGE_EXPENSE
+  #     - SHIPMENT_SUMMARY
+  #     - EXPENSE
+  #   x-display-value:
+  #     OTHER: Other document type
+  #     WEIGHT_TICKET: Weight ticket
+  #     STORAGE_EXPENSE: Storage expense receipt
+  #     SHIPMENT_SUMMARY: Shipment summary
+  #     EXPENSE: Expense
   CreateMovingExpenseDocumentPayload:
     type: object
     properties:
@@ -676,9 +676,9 @@ definitions:
         type: string
         example: very_useful_document.pdf
       moving_expense_type:
-        $ref: '#/definitions/MovingExpenseType'
+        $ref: 'shared_defs.yaml#/definitions/MovingExpenseType'
       move_document_type:
-        $ref: '#/definitions/MoveDocumentType'
+        $ref: 'shared_defs.yaml#/definitions/MoveDocumentType'
       requested_amount_cents:
         type: integer
         format: cents
@@ -706,38 +706,38 @@ definitions:
       - moving_expense_type
       - requested_amount_cents
       - payment_method
-  MovingExpenseType:
-    type: string
-    title: Moving Expense Type
-    enum:
-      - CONTRACTED_EXPENSE
-      - RENTAL_EQUIPMENT
-      - PACKING_MATERIALS
-      - WEIGHING_FEES
-      - GAS
-      - TOLLS
-      - OIL
-      - OTHER
-    x-display-value:
-      CONTRACTED_EXPENSE: Contracted Expense
-      RENTAL_EQUIPMENT: Rental Equipment
-      PACKING_MATERIALS: Packing Materials
-      WEIGHING_FEES: Weighing Fees
-      GAS: Gas
-      TOLLS: Tolls
-      OIL: Oil
-      OTHER: Other
-  MoveDocumentStatus:
-    type: string
-    title: Document Status
-    enum:
-      - AWAITING_REVIEW
-      - OK
-      - HAS_ISSUE
-    x-display-value:
-      AWAITING_REVIEW: Awaiting review
-      OK: OK
-      HAS_ISSUE: Has issue
+  # MovingExpenseType:
+  #   type: string
+  #   title: Moving Expense Type
+  #   enum:
+  #     - CONTRACTED_EXPENSE
+  #     - RENTAL_EQUIPMENT
+  #     - PACKING_MATERIALS
+  #     - WEIGHING_FEES
+  #     - GAS
+  #     - TOLLS
+  #     - OIL
+  #     - OTHER
+  #   x-display-value:
+  #     CONTRACTED_EXPENSE: Contracted Expense
+  #     RENTAL_EQUIPMENT: Rental Equipment
+  #     PACKING_MATERIALS: Packing Materials
+  #     WEIGHING_FEES: Weighing Fees
+  #     GAS: Gas
+  #     TOLLS: Tolls
+  #     OIL: Oil
+  #     OTHER: Other
+  # MoveDocumentStatus:
+  #   type: string
+  #   title: Document Status
+  #   enum:
+  #     - AWAITING_REVIEW
+  #     - OK
+  #     - HAS_ISSUE
+  #   x-display-value:
+  #     AWAITING_REVIEW: Awaiting review
+  #     OK: OK
+  #     HAS_ISSUE: Has issue
   ServiceMemberPayload:
     type: object
     properties:
@@ -1194,7 +1194,7 @@ definitions:
   #     uploads:
   #       type: array
   #       items:
-  #         $ref: 'shared_defs.yaml#/definitions/UploadPayload'
+  #         $ref: 'UploadPayload.yaml'
   #   required:
   #     - id
   #     - service_member_id
@@ -3302,7 +3302,7 @@ paths:
         200:
           description: returns a PPM attachments upload
           schema:
-            $ref: 'shared_defs.yaml#/definitions/UploadPayload'
+            $ref: 'UploadPayload.yaml'
         400:
           description: invalid request
         401:
@@ -3487,7 +3487,7 @@ paths:
         201:
           description: created upload
           schema:
-            $ref: 'shared_defs.yaml#/definitions/UploadPayload'
+            $ref: 'UploadPayload.yaml'
         400:
           description: invalid request
           schema:
