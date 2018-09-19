@@ -1,3 +1,18 @@
+swagger: '2.0'
+info:
+  description: The internal/website API for my.move.mil
+  version: 0.0.1
+  title: my.move.mil
+  contact:
+    email: ppp@truss.works
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+basePath: /internal
+consumes:
+  - application/json
+produces:
+  - application/json
 definitions:
   DocumentPayload:
     type: object
