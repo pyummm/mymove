@@ -68,106 +68,58 @@ definitions:
       - bytes
       - created_at
       - updated_at
-  MoveDocumentType:
-    type: string
-    title: Document Type
-    example: EXPENSE
-    enum: &MOVEDOCUMENTTYPE
-      - OTHER
-      - WEIGHT_TICKET
-      - STORAGE_EXPENSE
-      - SHIPMENT_SUMMARY
-      - EXPENSE
-    x-display-value:
-      OTHER: Other document type
-      WEIGHT_TICKET: Weight ticket
-      STORAGE_EXPENSE: Storage expense receipt
-      SHIPMENT_SUMMARY: Shipment summary
-      EXPENSE: Expense
-  MovingExpenseType:
-    type: string
-    title: Moving Expense Type
-    enum:
-      - CONTRACTED_EXPENSE
-      - RENTAL_EQUIPMENT
-      - PACKING_MATERIALS
-      - WEIGHING_FEES
-      - GAS
-      - TOLLS
-      - OIL
-      - OTHER
-    x-display-value:
-      CONTRACTED_EXPENSE: Contracted Expense
-      RENTAL_EQUIPMENT: Rental Equipment
-      PACKING_MATERIALS: Packing Materials
-      WEIGHING_FEES: Weighing Fees
-      GAS: Gas
-      TOLLS: Tolls
-      OIL: Oil
-      OTHER: Other
-  MoveDocumentStatus:
-    type: string
-    title: Document Status
-    enum:
-      - AWAITING_REVIEW
-      - OK
-      - HAS_ISSUE
-    x-display-value:
-      AWAITING_REVIEW: Awaiting review
-      OK: OK
-      HAS_ISSUE: Has issue
-  MoveDocumentPayload:
-    type: object
-    properties:
-      id:
-        type: string
-        format: uuid
-        example: c56a4180-65aa-42ec-a945-5fd21dec0538
-      move_id:
-        type: string
-        format: uuid
-        example: c56a4180-65aa-42ec-a945-5fd21dec0538
-      personally_procured_move_id:
-        type: string
-        format: uuid
-        example: c56a4180-65aa-42ec-a945-5fd21dec0538
-        x-nullable: true
-      document:
-        $ref: '#/definitions/DocumentPayload'
-      title:
-        type: string
-        example: very_useful_document.pdf
-        title: Document Title
-      move_document_type:
-        $ref: '#/definitions/MoveDocumentType'
-      status:
-        $ref: '#/definitions/MoveDocumentStatus'
-      notes:
-        type: string
-        example: This document is good to go!
-        x-nullable: true
-        title: Notes
-      moving_expense_type:
-        $ref: '#/definitions/MovingExpenseType'
-      requested_amount_cents:
-        type: integer
-        format: cents
-        minimum: 1
-        title: Requested Amount
-        description: unit is cents
-      payment_method:
-        type: string
-        title: Payment Method
-        enum:
-          - OTHER
-          - GTCC
-        x-display-value:
-          OTHER: Other account
-          GTCC: GTCC
-    required:
-      - id
-      - move_id
-      - document
-      - title
-      - move_document_type
-      - status
+  # MoveDocumentPayload:
+  #   type: object
+  #   properties:
+  #     id:
+  #       type: string
+  #       format: uuid
+  #       example: c56a4180-65aa-42ec-a945-5fd21dec0538
+  #     move_id:
+  #       type: string
+  #       format: uuid
+  #       example: c56a4180-65aa-42ec-a945-5fd21dec0538
+  #     personally_procured_move_id:
+  #       type: string
+  #       format: uuid
+  #       example: c56a4180-65aa-42ec-a945-5fd21dec0538
+  #       x-nullable: true
+  #     document:
+  #       $ref: '#/definitions/DocumentPayload'
+  #     title:
+  #       type: string
+  #       example: very_useful_document.pdf
+  #       title: Document Title
+  #     move_document_type:
+  #       $ref: '#/definitions/MoveDocumentType'
+  #     status:
+  #       $ref: '#/definitions/MoveDocumentStatus'
+  #     notes:
+  #       type: string
+  #       example: This document is good to go!
+  #       x-nullable: true
+  #       title: Notes
+  #     moving_expense_type:
+  #       $ref: '#/definitions/MovingExpenseType'
+  #     requested_amount_cents:
+  #       type: integer
+  #       format: cents
+  #       minimum: 1
+  #       title: Requested Amount
+  #       description: unit is cents
+  #     payment_method:
+  #       type: string
+  #       title: Payment Method
+  #       enum:
+  #         - OTHER
+  #         - GTCC
+  #       x-display-value:
+  #         OTHER: Other account
+  #         GTCC: GTCC
+  #   required:
+  #     - id
+  #     - move_id
+  #     - document
+  #     - title
+  #     - move_document_type
+  #     - status
