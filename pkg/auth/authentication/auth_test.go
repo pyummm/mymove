@@ -76,6 +76,7 @@ func (suite *AuthSuite) TestAuthorizationLogoutHandler() {
 	myMoveMil := "my.move.host"
 	officeMoveMil := "office.move.host"
 	tspMoveMil := "tsp.move.host"
+	ordersMoveMil := "orders.move.host"
 	callbackPort := "1234"
 	responsePattern := regexp.MustCompile(`href="(.+)"`)
 
@@ -90,7 +91,7 @@ func (suite *AuthSuite) TestAuthorizationLogoutHandler() {
 
 	authContext := NewAuthContext(suite.logger, fakeLoginGovProvider(suite.logger), "http://", callbackPort)
 	handler := LogoutHandler{authContext, "fake key", false}
-	wrappedHandler := auth.DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil)(handler)
+	wrappedHandler := auth.DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil, ordersMoveMil)(handler)
 
 	rr := httptest.NewRecorder()
 	wrappedHandler.ServeHTTP(rr, req.WithContext(ctx))

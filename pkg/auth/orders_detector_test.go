@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var ordersMoveMil = "orders.move.mil"
+//var ordersMoveMil = "orders.move.mil"
 
 func (suite *authSuite) TestOrdersDetectorConstructor() {
 	adm := OrdersDetectorMiddleware(suite.logger, ordersMoveMil)

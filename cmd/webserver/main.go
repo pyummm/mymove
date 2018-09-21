@@ -200,7 +200,7 @@ func main() {
 
 	// Session management and authentication middleware
 	sessionCookieMiddleware := auth.SessionCookieMiddleware(logger, *clientAuthSecretKey, *noSessionTimeout)
-	appDetectionMiddleware := auth.DetectorMiddleware(logger, *myHostname, *officeHostname, *tspHostname)
+	appDetectionMiddleware := auth.DetectorMiddleware(logger, *myHostname, *officeHostname, *tspHostname, *ordersHostname)
 	userAuthMiddleware := authentication.UserAuthMiddleware(logger)
 
 	handlerContext := handlers.NewHandlerContext(dbConnection, logger)
@@ -349,6 +349,7 @@ func main() {
 	errChan := make(chan error)
 	moveMilCerts := []server.TLSCert{
 		server.TLSCert{
+			//Append move.mil cert with CA certificate chain
 			CertPEMBlock: bytes.Join([][]byte{
 				[]byte(*moveMilDODTLSCert),
 				[]byte(*moveMilDODCACert)},

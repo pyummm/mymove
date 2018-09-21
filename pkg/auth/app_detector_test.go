@@ -13,9 +13,10 @@ import (
 var myMoveMil = "my.move.mil"
 var officeMoveMil = "office.move.mil"
 var tspMoveMil = "tsp.move.mil"
+var ordersMoveMil = "orders.move.mil"
 
 func (suite *authSuite) TestMiddlewareConstructor() {
-	adm := DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil)
+	adm := DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil, ordersMoveMil)
 	suite.NotNil(adm)
 }
 
@@ -29,7 +30,7 @@ func (suite *authSuite) TestMiddleWareMyApp() {
 		suite.False(session.IsTspApp(), "first should not be tspApp")
 		suite.Equal(myMoveMil, session.Hostname)
 	})
-	myMoveMiddleware := DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil)(myMoveTestHandler)
+	myMoveMiddleware := DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil, ordersMoveMil)(myMoveTestHandler)
 
 	req, _ := http.NewRequest("GET", "/some_url", nil)
 	req.Host = myMoveMil
@@ -48,7 +49,7 @@ func (suite *authSuite) TestMiddleWareMyApp() {
 		suite.False(session.IsTspApp(), "should not be tspApp")
 		suite.Equal(officeMoveMil, session.Hostname)
 	})
-	officeMiddleware := DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil)(officeTestHandler)
+	officeMiddleware := DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil, ordersMoveMil)(officeTestHandler)
 
 	req, _ = http.NewRequest("GET", "/some_url", nil)
 	req.Host = fmt.Sprintf("%s:8080", officeMoveMil)
@@ -62,7 +63,7 @@ func (suite *authSuite) TestMiddleWareMyApp() {
 		suite.True(session.IsTspApp(), "should be tspApp")
 		suite.Equal(tspMoveMil, session.Hostname)
 	})
-	tspMiddleware := DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil)(tspTestHandler)
+	tspMiddleware := DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil, ordersMoveMil)(tspTestHandler)
 
 	req, _ = http.NewRequest("GET", "/some_url", nil)
 	req.Host = fmt.Sprintf("%s:8080", tspMoveMil)
@@ -72,7 +73,7 @@ func (suite *authSuite) TestMiddleWareMyApp() {
 	noAppTestHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		suite.Fail("Should not be called")
 	})
-	noAppMiddleware := DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil)(noAppTestHandler)
+	noAppMiddleware := DetectorMiddleware(suite.logger, myMoveMil, officeMoveMil, tspMoveMil, ordersMoveMil)(noAppTestHandler)
 
 	req, _ = http.NewRequest("GET", "/some_url", nil)
 	req.Host = "totally.bogus.hostname"

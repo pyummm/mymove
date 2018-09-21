@@ -140,7 +140,6 @@ func (s Server) tlsConfig() (*tls.Config, error) {
 		MinVersion:               tls.VersionTLS12,
 		NextProtos:               []string{"h2"},
 		PreferServerCipherSuites: true,
-		RootCAs:                  caCerts,
 	}
 
 	// Map certificates with the CommonName / DNSNames to support

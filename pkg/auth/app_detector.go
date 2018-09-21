@@ -17,6 +17,8 @@ const (
 	OfficeApp application = "OFFICE"
 	// MyApp indicates my.move.mil
 	MyApp application = "MY"
+	// OrdersApp indicates orders.move.mil
+	OrdersApp application = "ORDERS"
 )
 
 // IsTspApp returns true iff the request is for the office.move.mil host
@@ -35,8 +37,13 @@ func (s *Session) IsMyApp() bool {
 }
 
 // DetectorMiddleware detects which application we are serving based on the hostname
-func DetectorMiddleware(logger *zap.Logger, myHostname string, officeHostname string, tspHostname string) func(next http.Handler) http.Handler {
-	logger.Info("Creating host detector", zap.String("myHost", myHostname), zap.String("officeHost", officeHostname), zap.String("tspHost", tspHostname))
+func DetectorMiddleware(logger *zap.Logger, myHostname string, officeHostname string, tspHostname string, ordersHostname string) func(next http.Handler) http.Handler {
+	logger.Info("Creating host detector",
+		zap.String("myHost", myHostname),
+		zap.String("officeHost", officeHostname),
+		zap.String("tspHost", tspHostname),
+		zap.String("ordersHost", ordersHostname),
+	)
 	return func(next http.Handler) http.Handler {
 		mw := func(w http.ResponseWriter, r *http.Request) {
 			session := SessionFromRequestContext(r)
@@ -48,6 +55,8 @@ func DetectorMiddleware(logger *zap.Logger, myHostname string, officeHostname st
 				appName = OfficeApp
 			} else if strings.EqualFold(parts[0], tspHostname) {
 				appName = TspApp
+			} else if strings.EqualFold(parts[0], ordersHostname) {
+				appName = OrdersApp
 			} else {
 				logger.Error("Bad hostname", zap.String("hostname", r.Host))
 				http.Error(w, http.StatusText(400), http.StatusBadRequest)
