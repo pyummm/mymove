@@ -6,11 +6,11 @@
 
 ## Context and Problem Statement
 
-To make MyMove a canonical 12-factor application, we must do a better job of managing [config](https://12factor.net/config).  Our webserver uses flags and environment variables, but our use of config is not managed in a cohesive way.  With the use of a more robust framework and some patterns, we can make incorporating new config options and deployment environments seamless.
+To make MyMove a canonical [12-factor application](https://12factor.net/), we must do a better job of managing [config](https://12factor.net/config).  Our webserver uses flags and environment variables, but our use of config throughout the application is not managed in a cohesive way.  The use of a more robust config framework with standard patterns will enable the seamless integration of new options and application environmental contexts, e.g., a local docker server, end-to-end test context, mock per-branch environments, etc.
 
 ## Decision Drivers
 
-* Maintained
+* Maintained (new commits less than 6 months ago)
 * Support environment variables, command line flags, and config files.
 * Supports integer, duration, and time variables.
 * Enables using JSON as config values
@@ -33,7 +33,7 @@ Chosen option: "Cobra/Viper/pflag".  This option has the most community support 
 
 Go ships with a built-in [flag](https://godoc.org/flag) package that provides support for command line flags.
 
-* Good, no additional dependencies
+* Good, no additional dependencies.
 * Good, maintained but shouldn't receive any improvements either.
 * Good, supports bool, (u)int, (u)int64, (u)float64, time.Duration, and string.
 * Bad, no support for JSON variables.
@@ -46,12 +46,13 @@ Go ships with a built-in [flag](https://godoc.org/flag) package that provides su
 
 * Good, cobra/viper/pflag each have over 50 contributors and are actively maintained.
 * Good, cobra, viper, and pflag are "owned" by a [Steve Francia](https://github.com/spf13/), a Google employee, and the creator of Hugo.
-* Good, supports aliases to enable non-breaking improvements
-* Good, supports bool, int, int64, float64, duration, string, map[string]string, []string, map[string][]string, and time.Time
+* Good, supports aliases to enable non-breaking improvements.
+* Good, supports bool, int, int64, float64, duration, string, map[string]string, []string, map[string][]string, and time.Time.
 * Bad, no support for JSON variables.
-* Good, can unmarshal flag values into structs
-* Good, can mark flag as required using Cobra (can also do defaults)
+* Good, can unmarshal flag values into structs.
+* Good, can mark flag as required using Cobra (can also do defaults).
 * Good, doesn't panic on bad values and can retrieve errors from pflag if needed.
+* Good, supports json, toml, yaml, properties, and hcl config file formats.
 
 ### github.com/namsral/flag
 
